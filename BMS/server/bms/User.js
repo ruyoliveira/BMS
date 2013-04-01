@@ -10,24 +10,24 @@ var user = function() {
 	this.password="haho";
 	this.userPreference="hahe";
 };	
-user.createUser= function (name, pwd) {
+user.prototype.createUser= function (name, pwd) {
 		
 		this.name = name;
 		this.password = pwd;
 		
 	};
 	
-user.changeName = function(name) {
+user.prototype.changeName = function(name) {
 		
 
 		
 	};
 	
-user.changePassword= function (pwd) {
+user.prototype.changePassword= function (pwd) {
 		
 	};
 	
-user.setUserPreference = function(name, pwd, userPref) {
+user.prototype.setUserPreference = function(name, pwd, userPref) {
 		
 	};
 //Will be modified, because the method to do this task will be in a module called db_manager, though the method load()
@@ -41,7 +41,7 @@ user.prototype.save_user = function(user_name){
 	});
 	
 }
-user.prototype.load_user = function(user_name){
+user.prototype.load_user = function(user_name,callback){
 	var databaseUrl = "BMS"; // "username:password@example.com/mydb"
 	var collections = ["users"];//set the collections used in the DB, necessary to manage db the same way its managed in mongodb
 	var db = require("mongojs").connect(databaseUrl, collections);//start connection, setting the dbs and collections that mongojs will use
@@ -50,14 +50,16 @@ user.prototype.load_user = function(user_name){
 		else {
 			//In case that are more than one user with the same name, return the first result
 			if(users_found.length>1) {
-				console.log(users_found[0]);
-				return users_found[0];
+				//console.log(users_found[0]);
+				this.name=users_found[0].name;
+				this.password=users_found[0].password;
+				callback(null,users_found[0]);
 				
 			}
 			//In the other case, return the result
     			else{
-    				console.log(users_found);
-    				return users_found;
+    				//console.log(users_found);
+    				callback(null,users_found);
     			}
   		}
 	});
