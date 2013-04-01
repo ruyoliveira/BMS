@@ -31,37 +31,47 @@ user.setUserPreference = function(name, pwd, userPref) {
 		
 	};
 //Will be modified, because the method to do this task will be in a module called db_manager, though the method load()
-user.prototype.load_user = function(name){
-	mongoose.connect('localhost', 'BMS');
-	var db = mongoose.connection;
-	db.on('error', console.error.bind(console, 'connection error:'));
-
-	db.once('open', function callback () {
-  		var userSchema = mongoose.Schema({
-    						name: String,
-    						password: String
-					});
-
-		var UserModel = mongoose.model('UserModel', userSchema);
-		var adm = new UserModel({ name: 'ADM' ,password:'11111'});
-	
-		adm.save(function (err, adm) {
-	  		if (err){
-	  			console.log("error : function adm.save()");
-	  		}
-	  		console.log("Saved")
-	  		
-		});
-	
-		UserModel.find(function (err, users) {
-	  		if (err){
-	  			console.log("error : function UserModel.find()");
-	  		} 
-	  		console.log(users)
-		});
-
+user.prototype.save_user = function(user_name){
+	var databaseUrl = "BMS"; // "username:password@example.com/mydb"
+	var collections = ["users"];//set the collections used in the DB, necessary to manage db the same way its managed in mongodb
+	var db = require("mongojs").connect(databaseUrl, collections);//start connection, setting the dbs and collections that mongojs will use
+	db.users.save({name:user_name,email: "adm@bms.com", password: "111111", sex: "male"}, function(err, saved) {
+	  		if( err || !saved ) console.log("User not saved");
+			else console.log("User"+user_name+ "saved");
 	});
 	
+}
+user.prototype.load_user = function(user_name){
+	var databaseUrl = "BMS"; // "username:password@example.com/mydb"
+	var collections = ["users"];//set the collections used in the DB, necessary to manage db the same way its managed in mongodb
+	var db = require("mongojs").connect(databaseUrl, collections);//start connection, setting the dbs and collections that mongojs will use
+	db.users.find({name:user_name},function(err, users_found) {
+		if( err || !users_found) console.log("No user called '"+user_name+"' found");
+		else {
+			//In case that are more than one user with the same name, return the first result
+			if(users_found.length>1) {
+				console.log(users_found[0]);
+				return users_found[0];
+				
+			}
+			//In the other case, return the result
+    			else{
+    				console.log(users_found);
+    				return users_found;
+    			}
+  		}
+	});
+}
+user.prototype.load_all_users = function(){
+	var databaseUrl = "BMS"; // "username:password@example.com/mydb"
+	var collections = ["users"];//set the collections used in the DB, necessary to manage db the same way its managed in mongodb
+	var db = require("mongojs").connect(databaseUrl, collections);//start connection, setting the dbs and collections that mongojs will use
+	db.users.find(function(err, users_found) {
+	if( err || !users_found) console.log("No users found");
+		else users_found.forEach( function(single_user_found) {
+    			console.log(single_user_found);
+  		});
+	});
 }
 
 module.exports = user;
