@@ -23,16 +23,35 @@ function main_keypad(){
 	sp.on('data', function(line) {
 	
 	    	
-		console.log(line[0]);
+		console.log(line);
+		//Identifies if its a arduino led flag(97)
+		if(line=="97"){
+			return;
+		}
 	    	password_buffer=password_buffer+line[0];
 	    
 	    	if(password_buffer.length>4){
 	    		if(password_buffer==adm_unlocker.password){
+	    			//Write to serial port the '97' flag to indicate 'password correct'
+	    			sp.write('a', function(err, results) {
+    						if(err){ 
+    							console.log('err ' + err);
+    							console.log('results ' + results);
+    						}
+ 				 });  
+ 				//end write to serial port
 	    			console.log("Password CORRECT!");
-	    		
 	    		}
 	    		else{
-	    		console.log("Password Incorrect");
+	    			//Write to serial port the '98' flag to indicate 'password incorrect'
+	    			sp.write('b', function(err, results) {
+    						if(err){ 
+    							console.log('err ' + err);
+    							console.log('results ' + results);
+    						}
+ 				 });
+ 				 //end write to serial port
+ 				 console.log("Password Incorrect");  
 	    	}
 	    	password_buffer='';
 	    }
