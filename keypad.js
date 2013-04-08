@@ -5,7 +5,7 @@ var password_buffer='';
 adm_unlocker.load_user("adm",function(err,user_found){
 			if(err||!user_found) console.log("ERROR: Not possible to loggin as 'adm'");
 			adm_unlocker = user_found[0];
-			console.log("Logged as '"+adm_unlocker.name);
+			console.log("Logged as "+adm_unlocker.name);
 			main_keypad();
 								
 			}
