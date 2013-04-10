@@ -42,8 +42,30 @@ temperature.on ('data', function(line) {
 		value = value + line [i];
 		
 	}
-	// console.log(value);
 	currentValue = value;
+	if(currentValue>0){
+		    		//Write to serial port the '97' flag to indicate 'password correct'
+	    			sp.write('a', function(err, results) {
+	    			if(err){ 
+	    			console.log('err ' + err);
+	    			console.log('results ' + results);
+	    			}
+	 		 });  
+	 		//end write to serial port
+			console.log("Password CORRECT!");
+	}
+	else{
+		    			//Write to serial port the '98' flag to indicate 'password incorrect'
+		    			sp.write('b', function(err, results) {
+	    						if(err){ 
+	    							console.log('err ' + err);
+	    							console.log('results ' + results);
+	    						}
+	 				 });
+	 				 //end write to serial port
+	 				 console.log("Password Incorrect");  
+		    	}
+	
 	console.log('Valeur courante: ' + currentValue);
 	console.log('Valeur precedente: ' + valueInit);
 	// On crée une instance du Model
@@ -62,7 +84,7 @@ temperature.on ('data', function(line) {
 		// On se déconnecte de MongoDB maintenant
   		// mongoose.connection.close();
 
-		});
+			});
 		}
 
 	valueInit= parseFloat(value);
