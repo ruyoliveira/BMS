@@ -20,12 +20,13 @@ var temperature = new serialport.SerialPort(port, {
 			baudrate: 9600,
 			parser: serialport.parsers.readline('\r\n')});
 
-mongoose.connect('mongodb://localhost/bms', function(err) {
+mongoose.connect('mongodb://localhost/BMS', function(err) {
   if (err) { throw err; }
 });
 
 // Création du schéma pour les temperatures
 var temperatureSchema = new mongoose.Schema({
+  name : String,	
   temperature : String,
   date : { type : Date, default : Date.now }
 });
@@ -48,8 +49,9 @@ temperature.on ('data', function(line) {
 	// On crée une instance du Model
 		var temp = new temperatureModel ();
 		temp.temperature = currentValue;
+		temp.name = "LastEntry";
 		// On le sauvegarde dans MongoDB (seulement si la temperature courante est superieure a la temperature precedente)
-		if ((parseFloat(currentValue) - valueInit ) > 1) { 
+		if ((parseFloat(currentValue) - valueInit ) >= 0) { 
 			temp.save(function (err) {
   			if (err) { throw err; }
   				console.log('Temperature ajoutée avec succès !');
