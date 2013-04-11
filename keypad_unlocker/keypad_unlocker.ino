@@ -17,8 +17,8 @@ char keys[ROWS][COLS] = {
   {'7','8','9'},
   {'*','0','#'}
 };
-byte rowPins[ROWS] = {5, 6, 7, 8}; //connect to the row pinouts of the keypad
-byte colPins[COLS] = {2, 3, 4}; //connect to the column pinouts of the keypad
+byte rowPins[ROWS] = {45, 46, 47, 48}; //connect to the row pinouts of the keypad
+byte colPins[COLS] = {42, 43, 44}; //connect to the column pinouts of the keypad
 
 
 
@@ -27,8 +27,8 @@ Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
 
 //GREEN AND RED LED
-int led_green = 22;
-int led_red = 23;
+int led_green = 52;
+int led_red = 53;
 
 int incomingByte = 0;//receive data from the serial port
 
