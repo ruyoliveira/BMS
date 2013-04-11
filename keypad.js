@@ -24,7 +24,7 @@ function main_keypad(){
 		//Register data callback, only after serial port opening event;
 		sp.on('data', function(line) {
 	
-		    	
+		    	//if(line[0]=='t'){return;}
 			console.log(line);
 			//Identifies if its a arduino led flag(97)
 			if(line=="97"){

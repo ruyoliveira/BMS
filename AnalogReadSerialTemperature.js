@@ -4,7 +4,7 @@ var serialport = require('serialport');
 var value = '';
 var currentValue = '';
 var valueInit = parseFloat(value);
-var user_temperature='20.30';
+var user_temperature='23.00';
 // Inclusion de Mongoose
 var mongoose = require('mongoose');
 
@@ -39,6 +39,7 @@ var temperatureModel = mongoose.model('temperatures', temperatureSchema);
   
 temperature.on ('data', function(line) {
 
+	
 	for ( i = 0; i<5; i++) {
 		value = value + line [i];
 		
