@@ -4,6 +4,7 @@ var serialport = require('serialport');
 var value = '';
 var currentValue = '';
 var valueInit = parseFloat(value);
+var user_temperature='20.30';
 // Inclusion de Mongoose
 var mongoose = require('mongoose');
 
@@ -43,24 +44,24 @@ temperature.on ('data', function(line) {
 		
 	}
 	currentValue = value;
-	if(currentValue>0){
+	if(parseFloat(currentValue)-parseFloat(user_temperature)>0.5){
 		    		//Write to serial port the '97' flag to indicate 'password correct'
-	    			sp.write('a', function(err, results) {
+	    			temperature.write('a', function(err, results) {
 	    			if(err){ 
 	    			console.log('err ' + err);
-	    			console.log('results ' + results);
 	    			}
+	    			console.log('Envoye a ');
 	 		 });  
 	 		//end write to serial port
 			console.log("Password CORRECT!");
 	}
 	else{
 		    			//Write to serial port the '98' flag to indicate 'password incorrect'
-		    			sp.write('b', function(err, results) {
+		    			temperature.write('b', function(err, results) {
 	    						if(err){ 
 	    							console.log('err ' + err);
-	    							console.log('results ' + results);
 	    						}
+	    						console.log('Envoye b');
 	 				 });
 	 				 //end write to serial port
 	 				 console.log("Password Incorrect");  
@@ -73,18 +74,17 @@ temperature.on ('data', function(line) {
 		temp.temperature = currentValue;
 		temp.name = "LastEntry";
 		// On le sauvegarde dans MongoDB (seulement si la temperature courante est superieure a la temperature precedente)
-		if ((parseFloat(currentValue) - valueInit ) >= 0) { 
-			temp.save(function (err) {
-  			if (err) { throw err; }
-  				console.log('Temperature ajoutée avec succès !');
-		
-		
-		
+		if ((parseFloat(currentValue) - parseFloat(valueInit) ) >= 0.02) { 
 
-		// On se déconnecte de MongoDB maintenant
-  		// mongoose.connection.close();
+			var conditions = {name:temp.name}
+  			, update = { temperature: currentValue,date:temp.date }
+  			, options = { upsert: true };
 
-			});
+  			temperatureModel.findOneAndUpdate(conditions,update,options,function(err,nAffected){
+  					if(err) console.log('ERROR ON TEMPERATURE UPDATE');
+  					//console.log('nAffected ='+nAffected);
+  			});
+
 		}
 
 	valueInit= parseFloat(value);
