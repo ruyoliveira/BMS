@@ -7,5 +7,9 @@
 
   NodeJS
     http://nodejs.org/
+
+    NodeJS libs
+        keypad http://playground.arduino.cc/code/Keypad
+        onewire http://playground.arduino.cc/Learning/OneWire
     
 -Lancement-
