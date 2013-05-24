@@ -1,12 +1,4 @@
-/* @file HelloKeypad.pde
-|| @version 1.0
-|| @author Alexander Brevig
-|| @contact alexanderbrevig@gmail.com
-||
-|| @description
-|| | Demonstrates the simplest use of the matrix Keypad library.
-|| #
-*/
+
 #include <Keypad.h>
 
 const byte ROWS = 4; //four rows
@@ -59,7 +51,7 @@ void loop(){
   if (key){
     digitalWrite(led_green, LOW);//turns off leds
     digitalWrite(led_red, LOW);//turns off leds
-    Serial.println(key);
+    Serial.println(key);//print pressed key to serial port
     
     
     
