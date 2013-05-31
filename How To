@@ -8,8 +8,27 @@
   NodeJS
     http://nodejs.org/
 
-    NodeJS libs
-        keypad http://playground.arduino.cc/code/Keypad
-        onewire http://playground.arduino.cc/Learning/OneWire
+  NodeJS libs
+      keypad http://playground.arduino.cc/code/Keypad
+      onewire http://playground.arduino.cc/Learning/OneWire
+  git/github
+    install git - http://git-scm.com/downloads
+    create github account - http://github.com/
+    open terminal and insert the following commands to copy the repo :
+      -git clone https://github.com/ruyoliveira/BMS.git
+      -cd BMS
+      -git remote add upstream https://github.com/ruyoliveira/BMS.git
+      -git fetch upstream
+    ##Outros comandos
+    
+    *Criar um branch
+      -git branch nome_do_branch
+    *Usar o branch
+      -git checkout nome_do_branch
+    *Enviar alteracoes feitas ao repositorio(github)
+      -git push origin nome_do_branch
+    OBS:
+    
+    
     
 -Lancement-
