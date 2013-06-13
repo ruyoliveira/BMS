@@ -54,7 +54,7 @@ temperature.on ('data', function(line) {
 			{ 
 				console.log('err ' + err);
 			}
-			console.log('Sent \'turn on fan \' ');
+			console.log('Sent \'turn on Air Conditioning fan \' ');
 		});
   		//end write to serial port
 	}
@@ -66,7 +66,7 @@ temperature.on ('data', function(line) {
 	    		{ 
 	    			console.log('err ' + err);
 	    		}
-	    		console.log('Sent \'turn off fan \' ');
+	    		console.log('Sent \'turn on Heating fan \' ');
 	 	});
 	 	//end write to serial port
 	}
