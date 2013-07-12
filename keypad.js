@@ -19,6 +19,7 @@ adm_unlocker.load_user("adm",function(err,user_found){
 	
 //Main function
 function main_keypad(){
+	var date;
 	var port = process.argv[2];
 	var serialport = require('serialport');
 	
@@ -41,6 +42,19 @@ function main_keypad(){
 				return;
 			}
 			//Identifies arduino flags
+			if(line=="ALARM1"||line=="ALARM2"||line=="ALARM3"){
+				date = new Date();
+				console.log(line+" happened at:  "+date);
+				return;
+			}
+			if(line=="OFF"){
+				console.log("Alarm OFF");
+				return;
+			}
+			if(line=="loading"){
+				console.log(".");
+				return;
+			}
 			if(line=="loading"){
 				console.log(".");
 				return;

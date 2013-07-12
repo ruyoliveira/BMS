@@ -1,6 +1,8 @@
 /*
 Access module and Security Module mixed
- */
+CHANGES:
+servo.h - left only _useTimer5 to arduinoMEga2560
+*/
  //acceess includes
 #include <Keypad.h>
 #include "Arduino.h"
@@ -333,7 +335,7 @@ int noteDurations[] = { 8, 8 };// note durations
 void setup(){
   Serial.begin(9600);
   //Select arduino port designed to servo
-  myservo.attach(9); 
+  myservo.attach(3); 
   myservo.write(0);
   // initialize the digital pin as an output.
   pinMode(led_red, OUTPUT);
@@ -384,6 +386,7 @@ void loop(){
           Serial.println("loading");   
         }  
       }
+      delay(100);
       Serial.println("closed");
       digitalWrite(led_green, LOW);//turns off leds
       digitalWrite(led_red, LOW);//turns off leds 
