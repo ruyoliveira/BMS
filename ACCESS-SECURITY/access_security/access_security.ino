@@ -1,9 +1,9 @@
 /*
 Access module and Security Module mixed
-CHANGES:
-servo.h - left only _useTimer5 to arduinoMEga2560
-*/
- //acceess includes
+ CHANGES:
+ servo.h - left only _useTimer5 to arduinoMEga2560
+ */
+//acceess includes
 #include <Keypad.h>
 #include "Arduino.h"
 #include <Servo.h> 
@@ -34,198 +34,199 @@ servo.h - left only _useTimer5 to arduinoMEga2560
 static const byte ASCII[][5] =
 {
   {
-    0x00, 0x00, 0x00, 0x00, 0x00    } // 20
+    0x00, 0x00, 0x00, 0x00, 0x00      } // 20
   ,{
-    0x00, 0x00, 0x5f, 0x00, 0x00    } // 21 !
+    0x00, 0x00, 0x5f, 0x00, 0x00      } // 21 !
   ,{
-    0x00, 0x07, 0x00, 0x07, 0x00    } // 22 "
+    0x00, 0x07, 0x00, 0x07, 0x00      } // 22 "
   ,{
-    0x14, 0x7f, 0x14, 0x7f, 0x14    } // 23 #
+    0x14, 0x7f, 0x14, 0x7f, 0x14      } // 23 #
   ,{
-    0x24, 0x2a, 0x7f, 0x2a, 0x12    } // 24 $
+    0x24, 0x2a, 0x7f, 0x2a, 0x12      } // 24 $
   ,{
-    0x23, 0x13, 0x08, 0x64, 0x62    } // 25 %
+    0x23, 0x13, 0x08, 0x64, 0x62      } // 25 %
   ,{
-    0x36, 0x49, 0x55, 0x22, 0x50    } // 26 &
+    0x36, 0x49, 0x55, 0x22, 0x50      } // 26 &
   ,{
-    0x00, 0x05, 0x03, 0x00, 0x00    } // 27 '
+    0x00, 0x05, 0x03, 0x00, 0x00      } // 27 '
   ,{
-    0x00, 0x1c, 0x22, 0x41, 0x00    } // 28 (
+    0x00, 0x1c, 0x22, 0x41, 0x00      } // 28 (
   ,{
-    0x00, 0x41, 0x22, 0x1c, 0x00    } // 29 )
+    0x00, 0x41, 0x22, 0x1c, 0x00      } // 29 )
   ,{
-    0x14, 0x08, 0x3e, 0x08, 0x14    } // 2a *
+    0x14, 0x08, 0x3e, 0x08, 0x14      } // 2a *
   ,{
-    0x08, 0x08, 0x3e, 0x08, 0x08    } // 2b +
+    0x08, 0x08, 0x3e, 0x08, 0x08      } // 2b +
   ,{
-    0x00, 0x50, 0x30, 0x00, 0x00    } // 2c ,
+    0x00, 0x50, 0x30, 0x00, 0x00      } // 2c ,
   ,{
-    0x08, 0x08, 0x08, 0x08, 0x08    } // 2d -
+    0x08, 0x08, 0x08, 0x08, 0x08      } // 2d -
   ,{
-    0x00, 0x60, 0x60, 0x00, 0x00    } // 2e .
+    0x00, 0x60, 0x60, 0x00, 0x00      } // 2e .
   ,{
-    0x20, 0x10, 0x08, 0x04, 0x02    } // 2f /
+    0x20, 0x10, 0x08, 0x04, 0x02      } // 2f /
   ,{
-    0x3e, 0x51, 0x49, 0x45, 0x3e    } // 30 0
+    0x3e, 0x51, 0x49, 0x45, 0x3e      } // 30 0
   ,{
-    0x00, 0x42, 0x7f, 0x40, 0x00    } // 31 1
+    0x00, 0x42, 0x7f, 0x40, 0x00      } // 31 1
   ,{
-    0x42, 0x61, 0x51, 0x49, 0x46    } // 32 2
+    0x42, 0x61, 0x51, 0x49, 0x46      } // 32 2
   ,{
-    0x21, 0x41, 0x45, 0x4b, 0x31    } // 33 3
+    0x21, 0x41, 0x45, 0x4b, 0x31      } // 33 3
   ,{
-    0x18, 0x14, 0x12, 0x7f, 0x10    } // 34 4
+    0x18, 0x14, 0x12, 0x7f, 0x10      } // 34 4
   ,{
-    0x27, 0x45, 0x45, 0x45, 0x39    } // 35 5
+    0x27, 0x45, 0x45, 0x45, 0x39      } // 35 5
   ,{
-    0x3c, 0x4a, 0x49, 0x49, 0x30    } // 36 6
+    0x3c, 0x4a, 0x49, 0x49, 0x30      } // 36 6
   ,{
-    0x01, 0x71, 0x09, 0x05, 0x03    } // 37 7
+    0x01, 0x71, 0x09, 0x05, 0x03      } // 37 7
   ,{
-    0x36, 0x49, 0x49, 0x49, 0x36    } // 38 8
+    0x36, 0x49, 0x49, 0x49, 0x36      } // 38 8
   ,{
-    0x06, 0x49, 0x49, 0x29, 0x1e    } // 39 9
+    0x06, 0x49, 0x49, 0x29, 0x1e      } // 39 9
   ,{
-    0x00, 0x36, 0x36, 0x00, 0x00    } // 3a :
+    0x00, 0x36, 0x36, 0x00, 0x00      } // 3a :
   ,{
-    0x00, 0x56, 0x36, 0x00, 0x00    } // 3b ;
+    0x00, 0x56, 0x36, 0x00, 0x00      } // 3b ;
   ,{
-    0x08, 0x14, 0x22, 0x41, 0x00    } // 3c <
+    0x08, 0x14, 0x22, 0x41, 0x00      } // 3c <
   ,{
-    0x14, 0x14, 0x14, 0x14, 0x14    } // 3d =
+    0x14, 0x14, 0x14, 0x14, 0x14      } // 3d =
   ,{
-    0x00, 0x41, 0x22, 0x14, 0x08    } // 3e >
+    0x00, 0x41, 0x22, 0x14, 0x08      } // 3e >
   ,{
-    0x02, 0x01, 0x51, 0x09, 0x06    } // 3f ?
+    0x02, 0x01, 0x51, 0x09, 0x06      } // 3f ?
   ,{
-    0x32, 0x49, 0x79, 0x41, 0x3e    } // 40 @
+    0x32, 0x49, 0x79, 0x41, 0x3e      } // 40 @
   ,{
-    0x7e, 0x11, 0x11, 0x11, 0x7e    } // 41 A
+    0x7e, 0x11, 0x11, 0x11, 0x7e      } // 41 A
   ,{
-    0x7f, 0x49, 0x49, 0x49, 0x36    } // 42 B
+    0x7f, 0x49, 0x49, 0x49, 0x36      } // 42 B
   ,{
-    0x3e, 0x41, 0x41, 0x41, 0x22    } // 43 C
+    0x3e, 0x41, 0x41, 0x41, 0x22      } // 43 C
   ,{
-    0x7f, 0x41, 0x41, 0x22, 0x1c    } // 44 D
+    0x7f, 0x41, 0x41, 0x22, 0x1c      } // 44 D
   ,{
-    0x7f, 0x49, 0x49, 0x49, 0x41    } // 45 E
+    0x7f, 0x49, 0x49, 0x49, 0x41      } // 45 E
   ,{
-    0x7f, 0x09, 0x09, 0x09, 0x01    } // 46 F
+    0x7f, 0x09, 0x09, 0x09, 0x01      } // 46 F
   ,{
-    0x3e, 0x41, 0x49, 0x49, 0x7a    } // 47 G
+    0x3e, 0x41, 0x49, 0x49, 0x7a      } // 47 G
   ,{
-    0x7f, 0x08, 0x08, 0x08, 0x7f    } // 48 H
+    0x7f, 0x08, 0x08, 0x08, 0x7f      } // 48 H
   ,{
-    0x00, 0x41, 0x7f, 0x41, 0x00    } // 49 I
+    0x00, 0x41, 0x7f, 0x41, 0x00      } // 49 I
   ,{
-    0x20, 0x40, 0x41, 0x3f, 0x01    } // 4a J
+    0x20, 0x40, 0x41, 0x3f, 0x01      } // 4a J
   ,{
-    0x7f, 0x08, 0x14, 0x22, 0x41    } // 4b K
+    0x7f, 0x08, 0x14, 0x22, 0x41      } // 4b K
   ,{
-    0x7f, 0x40, 0x40, 0x40, 0x40    } // 4c L
+    0x7f, 0x40, 0x40, 0x40, 0x40      } // 4c L
   ,{
-    0x7f, 0x02, 0x0c, 0x02, 0x7f    } // 4d M
+    0x7f, 0x02, 0x0c, 0x02, 0x7f      } // 4d M
   ,{
-    0x7f, 0x04, 0x08, 0x10, 0x7f    } // 4e N
+    0x7f, 0x04, 0x08, 0x10, 0x7f      } // 4e N
   ,{
-    0x3e, 0x41, 0x41, 0x41, 0x3e    } // 4f O
+    0x3e, 0x41, 0x41, 0x41, 0x3e      } // 4f O
   ,{
-    0x7f, 0x09, 0x09, 0x09, 0x06    } // 50 P
+    0x7f, 0x09, 0x09, 0x09, 0x06      } // 50 P
   ,{
-    0x3e, 0x41, 0x51, 0x21, 0x5e    } // 51 Q
+    0x3e, 0x41, 0x51, 0x21, 0x5e      } // 51 Q
   ,{
-    0x7f, 0x09, 0x19, 0x29, 0x46    } // 52 R
+    0x7f, 0x09, 0x19, 0x29, 0x46      } // 52 R
   ,{
-    0x46, 0x49, 0x49, 0x49, 0x31    } // 53 S
+    0x46, 0x49, 0x49, 0x49, 0x31      } // 53 S
   ,{
-    0x01, 0x01, 0x7f, 0x01, 0x01    } // 54 T
+    0x01, 0x01, 0x7f, 0x01, 0x01      } // 54 T
   ,{
-    0x3f, 0x40, 0x40, 0x40, 0x3f    } // 55 U
+    0x3f, 0x40, 0x40, 0x40, 0x3f      } // 55 U
   ,{
-    0x1f, 0x20, 0x40, 0x20, 0x1f    } // 56 V
+    0x1f, 0x20, 0x40, 0x20, 0x1f      } // 56 V
   ,{
-    0x3f, 0x40, 0x38, 0x40, 0x3f    } // 57 W
+    0x3f, 0x40, 0x38, 0x40, 0x3f      } // 57 W
   ,{
-    0x63, 0x14, 0x08, 0x14, 0x63    } // 58 X
+    0x63, 0x14, 0x08, 0x14, 0x63      } // 58 X
   ,{
-    0x07, 0x08, 0x70, 0x08, 0x07    } // 59 Y
+    0x07, 0x08, 0x70, 0x08, 0x07      } // 59 Y
   ,{
-    0x61, 0x51, 0x49, 0x45, 0x43    } // 5a Z
+    0x61, 0x51, 0x49, 0x45, 0x43      } // 5a Z
   ,{
-    0x00, 0x7f, 0x41, 0x41, 0x00    } // 5b [
+    0x00, 0x7f, 0x41, 0x41, 0x00      } // 5b [
   ,{
-    0x02, 0x04, 0x08, 0x10, 0x20    } // 5c ¥
+    0x02, 0x04, 0x08, 0x10, 0x20      } // 5c ¥
   ,{
-    0x00, 0x41, 0x41, 0x7f, 0x00    } // 5d ]
+    0x00, 0x41, 0x41, 0x7f, 0x00      } // 5d ]
   ,{
-    0x04, 0x02, 0x01, 0x02, 0x04    } // 5e ^
+    0x04, 0x02, 0x01, 0x02, 0x04      } // 5e ^
   ,{
-    0x40, 0x40, 0x40, 0x40, 0x40    } // 5f _
+    0x40, 0x40, 0x40, 0x40, 0x40      } // 5f _
   ,{
-    0x00, 0x01, 0x02, 0x04, 0x00    } // 60 `
+    0x00, 0x01, 0x02, 0x04, 0x00      } // 60 `
   ,{
-    0x20, 0x54, 0x54, 0x54, 0x78    } // 61 a
+    0x20, 0x54, 0x54, 0x54, 0x78      } // 61 a
   ,{
-    0x7f, 0x48, 0x44, 0x44, 0x38    } // 62 b
+    0x7f, 0x48, 0x44, 0x44, 0x38      } // 62 b
   ,{
-    0x38, 0x44, 0x44, 0x44, 0x20    } // 63 c
+    0x38, 0x44, 0x44, 0x44, 0x20      } // 63 c
   ,{
-    0x38, 0x44, 0x44, 0x48, 0x7f    } // 64 d
+    0x38, 0x44, 0x44, 0x48, 0x7f      } // 64 d
   ,{
-    0x38, 0x54, 0x54, 0x54, 0x18    } // 65 e
+    0x38, 0x54, 0x54, 0x54, 0x18      } // 65 e
   ,{
-    0x08, 0x7e, 0x09, 0x01, 0x02    } // 66 f
+    0x08, 0x7e, 0x09, 0x01, 0x02      } // 66 f
   ,{
-    0x0c, 0x52, 0x52, 0x52, 0x3e    } // 67 g
+    0x0c, 0x52, 0x52, 0x52, 0x3e      } // 67 g
   ,{
-    0x7f, 0x08, 0x04, 0x04, 0x78    } // 68 h
+    0x7f, 0x08, 0x04, 0x04, 0x78      } // 68 h
   ,{
-    0x00, 0x44, 0x7d, 0x40, 0x00    } // 69 i
+    0x00, 0x44, 0x7d, 0x40, 0x00      } // 69 i
   ,{
-    0x20, 0x40, 0x44, 0x3d, 0x00    } // 6a j 
+    0x20, 0x40, 0x44, 0x3d, 0x00      } // 6a j 
   ,{
-    0x7f, 0x10, 0x28, 0x44, 0x00    } // 6b k
+    0x7f, 0x10, 0x28, 0x44, 0x00      } // 6b k
   ,{
-    0x00, 0x41, 0x7f, 0x40, 0x00    } // 6c l
+    0x00, 0x41, 0x7f, 0x40, 0x00      } // 6c l
   ,{
-    0x7c, 0x04, 0x18, 0x04, 0x78    } // 6d m
+    0x7c, 0x04, 0x18, 0x04, 0x78      } // 6d m
   ,{
-    0x7c, 0x08, 0x04, 0x04, 0x78    } // 6e n
+    0x7c, 0x08, 0x04, 0x04, 0x78      } // 6e n
   ,{
-    0x38, 0x44, 0x44, 0x44, 0x38    } // 6f o
+    0x38, 0x44, 0x44, 0x44, 0x38      } // 6f o
   ,{
-    0x7c, 0x14, 0x14, 0x14, 0x08    } // 70 p
+    0x7c, 0x14, 0x14, 0x14, 0x08      } // 70 p
   ,{
-    0x08, 0x14, 0x14, 0x18, 0x7c    } // 71 q
+    0x08, 0x14, 0x14, 0x18, 0x7c      } // 71 q
   ,{
-    0x7c, 0x08, 0x04, 0x04, 0x08    } // 72 r
+    0x7c, 0x08, 0x04, 0x04, 0x08      } // 72 r
   ,{
-    0x48, 0x54, 0x54, 0x54, 0x20    } // 73 s
+    0x48, 0x54, 0x54, 0x54, 0x20      } // 73 s
   ,{
-    0x04, 0x3f, 0x44, 0x40, 0x20    } // 74 t
+    0x04, 0x3f, 0x44, 0x40, 0x20      } // 74 t
   ,{
-    0x3c, 0x40, 0x40, 0x20, 0x7c    } // 75 u
+    0x3c, 0x40, 0x40, 0x20, 0x7c      } // 75 u
   ,{
-    0x1c, 0x20, 0x40, 0x20, 0x1c    } // 76 v
+    0x1c, 0x20, 0x40, 0x20, 0x1c      } // 76 v
   ,{
-    0x3c, 0x40, 0x30, 0x40, 0x3c    } // 77 w
+    0x3c, 0x40, 0x30, 0x40, 0x3c      } // 77 w
   ,{
-    0x44, 0x28, 0x10, 0x28, 0x44    } // 78 x
+    0x44, 0x28, 0x10, 0x28, 0x44      } // 78 x
   ,{
-    0x0c, 0x50, 0x50, 0x50, 0x3c    } // 79 y
+    0x0c, 0x50, 0x50, 0x50, 0x3c      } // 79 y
   ,{
-    0x44, 0x64, 0x54, 0x4c, 0x44    } // 7a z
+    0x44, 0x64, 0x54, 0x4c, 0x44      } // 7a z
   ,{
-    0x00, 0x08, 0x36, 0x41, 0x00    } // 7b {
+    0x00, 0x08, 0x36, 0x41, 0x00      } // 7b {
   ,{
-    0x00, 0x00, 0x7f, 0x00, 0x00    } // 7c |
+    0x00, 0x00, 0x7f, 0x00, 0x00      } // 7c |
   ,{
-    0x00, 0x41, 0x36, 0x08, 0x00    } // 7d }
+    0x00, 0x41, 0x36, 0x08, 0x00      } // 7d }
   ,{
-    0x10, 0x08, 0x08, 0x10, 0x08    } // 7e ←
+    0x10, 0x08, 0x08, 0x10, 0x08      } // 7e ←
   ,{
-    0x78, 0x46, 0x41, 0x46, 0x78    } // 7f →
+    0x78, 0x46, 0x41, 0x46, 0x78      } // 7f →
 };
+
 void LcdCharacter(char character)
 {
   LcdWrite(LCD_D, 0x00);
@@ -292,18 +293,15 @@ const byte ROWS = 4; //four rows
 const byte COLS = 3; //three columns
 char keys[ROWS][COLS] = {
   {
-    '1','2','3'    }
-  ,
-  {
-    '4','5','6'    }
-  ,
-  {
-    '7','8','9'    }
-  ,
-  {
-    '*','0','#'    }
+    '1','2','3'  }
+  ,{
+    '4','5','6'  }
+  ,{
+    '7','8','9'  }
+  ,{
+    '*','0','#'  }
 };
-byte rowPins[ROWS] = { 
+byte rowPins[ROWS] = {
   45, 46, 47, 48}; //connect to the row pinouts of the keypad
 byte colPins[COLS] = { 
   42, 43, 44}; //connect to the column pinouts of the keypad
@@ -333,8 +331,10 @@ int motionPin1 = 10;// motion detector1 input pin
 int motionPin2 = 11;// motion detector2 input pin
 int motionPin3 = 12;// motion detector3 input pin
 int thisNote = 0;//current playing note
-int melody[] = { NOTE_C4, NOTE_G3};// notes in the melody
-int noteDurations[] = { 8, 8 };// note durations
+int melody[] = { 
+  NOTE_C4, NOTE_G3};// notes in the melody
+int noteDurations[] = { 
+  8, 8 };// note durations
 /*RFID VARIABLES*/
 RFID rfid(SS_PIN, RST_PIN); 
 int serNum0;
@@ -342,32 +342,23 @@ int serNum1;
 int serNum2;
 int serNum3;
 int serNum4;
-    
-    
-    
-    
-    
-    
-    
+
+
 /*ARDUINO SETUP###############################################################################*/
 void setup(){
   Serial.begin(9600);
-  //Select arduino port designed to servo
-  myservo.attach(3); 
-  myservo.write(0);
-  // initialize the digital pin as an output.
-  pinMode(led_red, OUTPUT);
-  pinMode(led_green, OUTPUT); 
-  //Initialise LCD
-  LcdInitialise();
+  myservo.attach(3); //Select arduino port designed to servo
+  myservo.write(0);//initialize servo position to 0
+  pinMode(led_red, OUTPUT);// initialize the digital pin as an output.
+  pinMode(led_green, OUTPUT); // initialize the digital pin as an output.
+  //LCD SETUP
+  LcdInitialise();//Initialise LCD
   LcdClear();
-  //Print initial text to LCD
-  LcdString("user: adm");
+  LcdString("user: adm");//Print initial text to LCD
   gotoXY(0,42);
   LcdString("pswd:"); 
   gotoXY(0,42);
-  //Transform passwordSize to another format
-  TamanhoSenha = ((TamanhoSenha-1)*8)+8+i;
+  TamanhoSenha = ((TamanhoSenha-1)*8)+8+i;//Transform passwordSize to another format
   /*Security Setup*/
   pinMode(ledPin, OUTPUT);
   pinMode(motionPin1, INPUT); 
@@ -384,12 +375,15 @@ void setup(){
 /*ARDUINO MAIN LOOP*/
 void loop(){
   delay(10);//used as a reference
-  //Door control codeblock
-  if (Serial.available() > 0) {
-    // read the incoming byte:
-    incomingByte = Serial.read();
-    //if the password is correct(incoming byte =97)
-    if(incomingByte==97){
+  if (Serial.available() > 0) {//Door control codeblock
+
+    incomingByte = Serial.read();// read the incoming byte:
+
+    if(incomingByte==97){ //if the password is correct(incoming byte =97)
+      if(alarmShout){
+        alarmShout = false;
+        Serial.println("OFF");
+      }
       Serial.println("opening");
       digitalWrite(led_green, HIGH);//turns on green light`
       for(pos = 0; pos < 180; pos += 1)  // goes from 0 degrees to 180 degrees 
@@ -410,7 +404,7 @@ void loop(){
         }  
       }
       delay(100);
-      Serial.println("closed");
+      Serial.println("Closed");
       digitalWrite(led_green, LOW);//turns off leds
       digitalWrite(led_red, LOW);//turns off leds 
       //Clear lcd and return lcd pointer to x=40
@@ -418,13 +412,20 @@ void loop(){
       gotoXY (i,42);
       LcdString("        "); 
     }
-    //if the password is incorrect(incoming byte =98)
-    if(incomingByte==98){
+    
+    if(incomingByte==98){//if the password is incorrect(incoming byte =98)
       digitalWrite(led_red, HIGH);//turns on red light
       //Clear lcd and return lcd pointer to x=40
       i=40;
       gotoXY (i,42);
       LcdString("        ");
+    }
+    if(incomingByte==99)//if user rfid detected and confirmed(incoming byte =99)
+    {
+      if(alarmShout){
+        alarmShout = false;
+        Serial.println("OFF");
+      }
     }
 
   }
@@ -438,7 +439,7 @@ void loop(){
   LcdWrite( LCD_CMD, 0x0C );  // LCD in normal mode. 0x0d for inverse
   LcdWrite(LCD_C, 0x20);
   LcdWrite(LCD_C, 0x0C); 
-  
+
   key= keypad.getKey();//get keypad Presses key   
   if (key){
     digitalWrite(led_green, LOW);//turns off leds
@@ -453,111 +454,92 @@ void loop(){
   int sensor1 = digitalRead(motionPin1); // reads the motion pin
   int sensor2 = digitalRead(motionPin2);
   int sensor3 = digitalRead(motionPin3);
-  
-   if(irrecv.decode(&results))
+
+  if(irrecv.decode(&results))
   {
     long int decCode = results.value;
-  ///  Serial.println(decCode);//Use this to discover the button value you need
     switch (decCode)
     {
-      case 2011242671:
-        if(alarmShout){
-          alarmShout = false;
-          Serial.println("OFF");
-        }
-        else{
-          Serial.println("ALARM");
-          alarmShout = true;        
-        }        
-        break;       
+    case 2011242671:
+      if(alarmShout){
+        alarmShout = false;
+        Serial.println("OFF");
+      }
+      else{
+        Serial.println("ALARM");
+        alarmShout = true;        
+      }        
+      break;       
     }
     irrecv.resume(); //recebe proximo valor
   }  
-   if(sensor1 == HIGH && !alarmShout){
-     Serial.println("ALARM1");
+  if(sensor1 == HIGH && !alarmShout){
+    Serial.println("ALARM1");
     alarmShout = true;
   }
   if( sensor2 == HIGH&& !alarmShout){
-     Serial.println("ALARM2");
+    Serial.println("ALARM2");
     alarmShout = true;
   }
-   if( sensor3 == HIGH&& !alarmShout){
-     Serial.println("ALARM3");
+  if( sensor3 == HIGH&& !alarmShout){
+    Serial.println("ALARM3");
     alarmShout = true;
   }
-   if(alarmShout){
+  if(alarmShout){
     digitalWrite(ledPin, HIGH);  
-    
-// to calculate the note duration, take one second divided by the note type     
+
+    // to calculate the note duration, take one second divided by the note type     
     int noteDuration = 1000/noteDurations[thisNote];    
     tone(8, melody[thisNote],noteDuration);
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
- 
+
     if(thisNote == 0)
       thisNote = 1;
     else
       thisNote = 0;
-    
-  }else
+
+  }
+  else
     digitalWrite(ledPin, LOW);
-    
+
   if(buttonState == HIGH && alarmShout){
     alarmShout = false;
     Serial.println("BUTTON OFF");
   }
   /*RFID LOOP  */
   if (rfid.isCard()) {
-        if (rfid.readCardSerial()) {
-            if (rfid.serNum[0] != serNum0
-                || rfid.serNum[1] != serNum1
-                || rfid.serNum[2] != serNum2
-                || rfid.serNum[3] != serNum3
-                || rfid.serNum[4] != serNum4
-            ) {
-                /* With a new cardnumber, show it. */
-                //Serial.println(" ");
-                //Serial.println("Card found");
-                serNum0 = rfid.serNum[0];
-                serNum1 = rfid.serNum[1];
-                serNum2 = rfid.serNum[2];
-                serNum3 = rfid.serNum[3];
-                serNum4 = rfid.serNum[4];
-               
-                //Serial.println(" ");
-                Serial.println("Cardnumber:");
-                //Serial.print("Dec: ");
-		Serial.print(rfid.serNum[0],DEC);
-                //Serial.print(", ");
-		Serial.print(rfid.serNum[1],DEC);
-                //Serial.print(", ");
-		Serial.print(rfid.serNum[2],DEC);
-                //Serial.print(", ");
-		Serial.print(rfid.serNum[3],DEC);
-                //Serial.print(", ");
-		Serial.print(rfid.serNum[4],DEC);
-                //Serial.println(" ");
-                /*        
-                Serial.print("Hex: ");
-		Serial.print(rfid.serNum[0],HEX);
-                Serial.print(", ");
-		Serial.print(rfid.serNum[1],HEX);
-                Serial.print(", ");
-		Serial.print(rfid.serNum[2],HEX);
-                Serial.print(", ");
-		Serial.print(rfid.serNum[3],HEX);
-                Serial.print(", ");
-		Serial.print(rfid.serNum[4],HEX);
-                Serial.println(" ");*/
-             } else {
-               /* If we have the same ID, just write a dot. */
-               Serial.print(".");
-             }
-          }
-    }
     
-    rfid.halt();
+    if (rfid.readCardSerial()) {//check if it was already read
+      if (rfid.serNum[0] != serNum0
+        || rfid.serNum[1] != serNum1
+        || rfid.serNum[2] != serNum2
+        || rfid.serNum[3] != serNum3
+        || rfid.serNum[4] != serNum4
+        ) {
+       
+        serNum0 = rfid.serNum[0];
+        serNum1 = rfid.serNum[1];
+        serNum2 = rfid.serNum[2];
+        serNum3 = rfid.serNum[3];
+        serNum4 = rfid.serNum[4];
+        
+        Serial.println("");
+        Serial.print("RFID");
+        Serial.print(rfid.serNum[0],DEC);
+        Serial.print(rfid.serNum[1],DEC);
+        Serial.print(rfid.serNum[2],DEC);
+        Serial.print(rfid.serNum[3],DEC);
+        Serial.print(rfid.serNum[4],DEC);
+      } 
+      else {
+        Serial.println("RFID.");
+      }
+    }
+  }
+  rfid.halt();
 }
+
 
 
 

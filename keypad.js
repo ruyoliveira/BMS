@@ -6,7 +6,7 @@ var user = require("./BMS/server/bms/User.js");
 //Variables
 var adm_unlocker= new user();
 var password_buffer='';
-
+var rfid='';
 //Load user from db
 adm_unlocker.load_user("adm",function(err,user_found){
 			if(err||!user_found) console.log("ERROR: Not possible to loggin as 'adm'");
@@ -35,14 +35,39 @@ function main_keypad(){
 		//Register data callback, only after serial port opening event;
 		sp.on('data', function(line) {
 	
-		    	//if(line[0]=='t'){return;}
-
 			//Identifies if its a arduino led flag(97)
-			if(line[0]=="a" || line[0] =="b"){
+			if(line[0]=="a" || line[0] =="b"|| line[0] =="c"|| line[0] == null){
 				return;
 			}
+			if(line[0]=='R'){//if read RFID flag
+			 	rfid='';
+			 	for(var i=4;i < 14;i++)
+			 	{
+			 		if(line[i]=='.'){
+			 			rfid=rfid+line[i];
+			 			break;
+			 		}
+			 		rfid=rfid+line[i];
+			 		
+			 	}
+			 	switch(rfid){
+			 		case "1364313112":
+			 		case ".":
+				 		sp.write('c', function(err, results) {//Write to serial port the '99' flag to indicate 'rfid registered'
+		    						if(err){ 
+		    							console.log('err ' + err);
+		    							console.log('results ' + results);
+		    						}
+		 				 });
+		 				break;
+			 		
+			 	}
+			 	
+	 			return;  
+			
+			}
 			//Identifies arduino flags
-			if(line=="ALARM1"||line=="ALARM2"||line=="ALARM3"){
+			if(line=="ALARM1"||line=="ALARM2"||line=="ALARM3"||line=="ALARM"){
 				date = new Date();
 				console.log(line+" happened at:  "+date);
 				return;
@@ -68,7 +93,7 @@ function main_keypad(){
 				return;
 			}
 			
-			if(line=="closed"){
+			if(line=="Closed"){
 				console.log("DOOR CLOSED.\nEnter your password:\n");
 				return;
 			}
@@ -89,7 +114,7 @@ function main_keypad(){
 		    			console.log("Password CORRECT!");
 		    		}
 		    		else{
-		    			
+		    			console.log(password_buffer);
 		    			sp.write('b', function(err, results) {//Write to serial port the '98' flag to indicate 'password incorrect'
 	    						if(err){ 
 	    							console.log('err ' + err);
